@@ -5,8 +5,15 @@
     <% @current_user = current_user %>
     <div>
       <p>welcome <%= @current_user.username %></p>
-      <form id="tweet_form" action="/twitter/update" method="post" id="tweet">
+      <h3>Tweet Now</h3>
+      <form class="tweet_form" action="/twitter/update" method="post" id="tweet">
         <textarea name="message" cols="20" rows="8" placeholder="message to send" maxlength="140" required="true"></textarea>
+        <input id="send_tweet" type="submit" value="Tweet">
+      </form>
+        <h3>Tweet Later</h3>
+      <form class="tweet_form" action="/update_later" method="post" id="tweet">
+        <textarea name="message" cols="20" rows="8" placeholder="message to send" maxlength="140" required="true"></textarea>
+        <input type="number" name="minutes" min="0" placeholder="min">
         <input id="send_tweet" type="submit" value="Tweet">
       </form>
       <p>

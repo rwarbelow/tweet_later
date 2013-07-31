@@ -31,13 +31,20 @@ end
 
 post '/twitter/update' do
   @user = current_user
-  job_id = @user.tweet(params[:text])
+  job_id = @user.tweet(params[:message])
+  content_type :json
+  job_id.to_json
+end
+
+post '/update_later' do 
+  @user = current_user
+  job_id = @user.tweet_later(params[:message], params[:minutes])
   content_type :json
   job_id.to_json
 end
 
 
+
 get '/status/:job_id' do
-  # return the status of a job to an AJAX call
   job_is_complete(params[:job_id]) ? "true" : "false"
 end

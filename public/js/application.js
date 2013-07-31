@@ -4,23 +4,22 @@ $(document).ready(function() {
   // when we try to bind to them
 
   // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-  $('#send_tweet').on('click', function(event){
+  $('.tweet_form').on('submit', function(event){
     event.preventDefault();
-    var url = '/twitter/update'
-    var data = $("#tweet_form").find('textarea').val();
-    $.post(url, {text: data}, function(response) {
+    var url = $(this).attr('action');
+    var data = $(this).serialize();
+    $.post(url, data, function(response) {
       $('.container').append('<p id="waiting">Waiting</p>');
       
 
       var getStatus = setInterval(function(){$.get('/status/'+ response, function(status) {
         console.log(status);
-        if (status == 'true') {
+        if (status === 'true') {
           clearInterval(getStatus);
-          return 'true'
+          $('#waiting').replaceWith('<p>Done</p>');
+          return 'true';
         };
       })}, 1000);
-
-      $('#waiting').replaceWith('<p>Done</p>');
 
     });
   });
